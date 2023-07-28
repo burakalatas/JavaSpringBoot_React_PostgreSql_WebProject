@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin
 public class AdminController {
     @Autowired
     private NewsRepository newsRepository;
@@ -29,46 +30,64 @@ public class AdminController {
         newsRepository.save(news);
         return "News added";
     }
-    @GetMapping("/updatenews")
-    public String updateNews(@RequestParam("id") int id, Model model){
-        Optional<News> n = newsRepository.findById(id);
-        model.addAttribute("news", n);
-
-        return "redirect:/admin/addnewspage";
+    @GetMapping("/findnewsbyid")
+    public Optional<News> findNewsById(@RequestParam("id") int id){
+        return newsRepository.findById(id);
     }
     @PostMapping("/updatenews")
     public String updateNews(@RequestBody News news){
         if (news == null){
             System.out.println("News is null");
-            return "redirect:/admin/addnewspage";
+            return "News is null";
         }
-        newsRepository.save(news);
-        return "redirect:/admin/addnewspage";
-    }
-    @GetMapping("/deletenews")
-    public String deleteNews(@RequestParam("id") int id){
-        newsRepository.delete(newsRepository.findById(id).get());
+        Optional<News> n = newsRepository.findById(news.getId());
+        if (news.getSubject() != null && !news.getSubject().equals("")){n.get().setSubject(news.getSubject());}
+        if (news.getContent() != null && !news.getContent().equals("")){n.get().setContent(news.getContent());}
+        if (news.getValidityDate() != null ){n.get().setValidityDate(news.getValidityDate());}
+        if (news.getNewsAddress() != null && !news.getNewsAddress().equals("")){n.get().setNewsAddress(news.getNewsAddress());}
+        newsRepository.save(n.get());
 
-        return "redirect:/admin/addnewspage";
+        return "News updated";
+    }
+    @DeleteMapping("/deletenews")
+    public String deleteNews(@RequestParam("id") int id){
+        newsRepository.deleteById(id);
+
+        return "News deleted";
     }
 
     @PostMapping("/addannouncement")
     public String addAnnouncement(@RequestBody Announcement a){
         if (a == null){
             System.out.println("News is null");
-            return "redirect:/admin/addannouncementpage";
+            return "Announcement is null";
         }
         announcementRepository.save(a);
-        return "redirect:/admin/addannouncementpage";
+        return "Announcement added";
     }
-    @GetMapping("/deneme")
-    public String deneme(){
-        Event n =newsRepository.findById(1).get();
+    @DeleteMapping("/deleteannouncement")
+    public String deleteAnnouncement(@RequestParam("id") int id){
+        announcementRepository.deleteById(id);
 
-        String a ="lolol";
-        return a;
+        return "Announcement deleted";
     }
+    @GetMapping("/findannouncementbyid")
+    public Optional<Announcement> findAnnouncementById(@RequestParam("id") int id){
+        return announcementRepository.findById(id);
+    }
+    @PostMapping("/updateannouncement")
+    public String updateNews(@RequestBody Announcement announcement){
+        if (announcement == null){
+            System.out.println("Announcement is null");
+            return "Announcement is null";
+        }
+        Optional<Announcement> n = announcementRepository.findById(announcement.getId());
+        if (announcement.getSubject() != null && !announcement.getSubject().equals("")){n.get().setSubject(announcement.getSubject());}
+        if (announcement.getContent() != null && !announcement.getContent().equals("")){n.get().setContent(announcement.getContent());}
+        if (announcement.getValidityDate() != null ){n.get().setValidityDate(announcement.getValidityDate());}
+        if (announcement.getImage() != null && !announcement.getImage().equals("")){n.get().setImage(announcement.getImage());}
+        announcementRepository.save(n.get());
 
-
-
+        return "Announcement updated";
+    }
 }
