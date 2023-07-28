@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import '../../custom.css';
+import Swal from 'sweetalert2';
 
 function News() {
     const [news, setNews] = useState([])
@@ -11,9 +13,22 @@ function News() {
             }
             )
     }, [])
+
+    const popup = (item) => async () => {
+
+            Swal.fire({
+                title: item.subject,
+                text: item.content,
+                footer: `<a target="_blank" href="https://${item.newsAddress}">Linke Git</a>`,
+                confirmButtonText: 'Kapat',
+
+        })
+    }
+
+
     return (
         <div>
-            <table class="table table-striped">
+            <table className='table table-hover'>
                 <thead>
                     <tr>
                         <th scope="col">Konu</th>
@@ -23,16 +38,14 @@ function News() {
                 </thead>
                 <tbody>
                     {news.map((item) => (
-                    <tr key={item.id}>
-                        <td>{item.subject}</td>
-                        <td>{item.validityDate}</td>
-                        <td>{item.newsAddress}</td>
+                    <tr key={item.id} onClick={popup(item)}>
+                        <td >{item.subject}</td>
+                        <td >{item.validityDate}</td>
+                        <td >{item.newsAddress}</td>
                     </tr>
                     ))}
                 </tbody>
             </table>
-
-
         </div>
     )
 }

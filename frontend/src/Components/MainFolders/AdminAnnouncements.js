@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function AdminAnnouncements() {
     const [announcement, setAnnouncement] = useState([])
@@ -20,8 +21,13 @@ function AdminAnnouncements() {
             body: JSON.stringify(id)
 
         }).then(() => {
-            console.log("Announcement deleted")
-            window.location.reload()
+            Swal.fire(
+                'Tebrikler!',
+                'Duyuru başarıyla silindi',
+                'success'
+            ).then(function () {
+                window.location.reload();
+            });
         })
     }
 

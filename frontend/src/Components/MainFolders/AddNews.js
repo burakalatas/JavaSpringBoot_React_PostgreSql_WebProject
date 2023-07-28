@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 function AddNews() {
     const[subject,setSubject]=useState('')
@@ -17,6 +18,11 @@ function AddNews() {
       }).then(()=>{
         console.log("New News added")
       })
+      Swal.fire(
+        'Tebrikler!',
+        'Haber başarıyla eklendi',
+        'success'
+    )
     }
 
     return (

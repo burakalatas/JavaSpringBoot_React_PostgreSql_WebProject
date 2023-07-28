@@ -1,0 +1,11 @@
+
+/* .clickableRow :hover{
+    background-color: #C5DFF8;
+    cursor: pointer;
+} */
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #C5DFF8;
+    cursor: pointer;
+}
+
+

@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function UpdateNews() {
     const params = useParams();
@@ -30,7 +31,13 @@ function UpdateNews() {
           body:JSON.stringify(newss)
     
       }).then(()=>{
-        console.log("News updated")
+        Swal.fire(
+            'Tebrikler!',
+            'Haber başarıyla güncellendi',
+            'success'
+        ).then(function () {
+            window.location.reload();
+        });
       })
     }
 
