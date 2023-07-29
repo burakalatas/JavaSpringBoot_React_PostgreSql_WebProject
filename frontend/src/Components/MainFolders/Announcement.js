@@ -19,7 +19,7 @@ function Announcement() {
         Swal.fire({
             title: item.subject,
             text: item.content,
-            imageUrl: item.image,
+            imageUrl: require(`../../../../backend/src/main/resources/static/images/${item.image}`),
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -27,8 +27,6 @@ function Announcement() {
 
     })
 }
-
-
     return (
         <div>
             <table class="table table-hover">
@@ -44,7 +42,7 @@ function Announcement() {
                     <tr key={item.id} onClick={popup(item)}>
                         <td>{item.subject}</td>
                         <td>{item.validityDate}</td>
-                        <td>{item.image}</td>
+                        <td><img src={require(`../../../../backend/src/main/resources/static/images/${item.image}`)} style={{width:"40px",height:"40px",borderRadius:"50px"}} alt="photoooo"></img></td>
                     </tr>
                     ))}
                 </tbody>

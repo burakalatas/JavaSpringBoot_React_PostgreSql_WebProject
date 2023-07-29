@@ -6,6 +6,7 @@ import com.cmv.project.Models.News;
 import com.cmv.project.Repositories.AnnouncementRepository;
 import com.cmv.project.Repositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,10 @@ public class UserController {
 
     @GetMapping("/news")
     public List<News> getNews(){
-        return newsRepository.findAll();
+        return newsRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
     @GetMapping("/announcement")
     public List<Announcement> getAnnouncement(){
-        return announcementRepository.findAll();
+        return announcementRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 }

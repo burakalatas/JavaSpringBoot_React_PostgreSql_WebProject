@@ -40,7 +40,7 @@ function AdminAnnouncements() {
                         <th scope="col">Konu</th>
                         <th scope="col">İçerik</th>
                         <th scope="col">Geçerlilik Tarihi</th>
-                        <th scope="col">Haber Linki</th>
+                        <th scope="col">Duyuru Görseli</th>
                         <th scope="col">Güncelle</th>
                         <th scope="col">Sil</th>
                     </tr>
@@ -52,7 +52,7 @@ function AdminAnnouncements() {
                         <td>{item.subject}</td>
                         <td>{item.content}</td>
                         <td>{item.validityDate}</td>
-                        <td>{item.image}</td>
+                        <td><img src={require(`../../../../backend/src/main/resources/static/images/${item.image}`)} style={{width:"40px",height:"40px",borderRadius:"50px"}} alt="photoooo"></img></td>
                         <td><Link className='btn btn-warning' to={{pathname:`/Admin/UpdateAnnouncement/${item.id}`}}>Güncelle</Link></td>
                             <td><button type="button" onClick={del(item.id)} class="btn btn-danger">Sil</button></td>
                     </tr>

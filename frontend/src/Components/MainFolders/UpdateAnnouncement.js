@@ -63,7 +63,7 @@ function AddAnnouncement() {
                 </div>
 
                 <br/>
-                <button onClick={handleClick} type="submit" className="btn btn-primary">Ekle</button>
+                <button onClick={handleClick} type="submit" className="btn btn-primary">Güncelle</button>
             </form>
 
         </div>

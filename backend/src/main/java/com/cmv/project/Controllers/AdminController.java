@@ -1,15 +1,15 @@
 package com.cmv.project.Controllers;
 
 import com.cmv.project.Models.Announcement;
-import com.cmv.project.Models.Event;
 import com.cmv.project.Models.News;
 import com.cmv.project.Repositories.AnnouncementRepository;
 import com.cmv.project.Repositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.File;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -56,15 +56,40 @@ public class AdminController {
         return "News deleted";
     }
 
+    File directory  = new File("src/main/resources/static/images/");
+    String UPLOAD_PATH = directory.getAbsolutePath()+"/";
     @PostMapping("/addannouncement")
-    public String addAnnouncement(@RequestBody Announcement a){
-        if (a == null){
-            System.out.println("News is null");
-            return "Announcement is null";
+    public String addAnnouncement(@RequestParam("file") MultipartFile file,
+                                  @RequestParam String subject, @RequestParam String content,
+                                  @RequestParam Date validityDate){
+        String fileName = file.getOriginalFilename();
+        Announcement announcement = new Announcement();
+        if (subject != null && !subject.equals("")){announcement.setSubject(subject);}
+        if (content != null && !content.equals("")){announcement.setContent(content);}
+        announcement.setImage(fileName);
+        if (validityDate != null){announcement.setValidityDate(validityDate);}
+        announcementRepository.save(announcement);
+
+        if (!file.isEmpty()) {
+            try {
+                file.transferTo(new File(UPLOAD_PATH + fileName));
+                return "File uploaded successfully.";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "File upload failed.";
+            }
         }
-        announcementRepository.save(a);
         return "Announcement added";
     }
+    @GetMapping("/getimage")
+    public @ResponseBody byte[] getImage(@RequestParam("id") int id){
+        Optional<Announcement> announcement = announcementRepository.findById(id);
+        String fileName = announcement.get().getImage();
+        File file = new File(UPLOAD_PATH + fileName);
+        return file.toURI().toString().getBytes();
+    }
+
+
     @DeleteMapping("/deleteannouncement")
     public String deleteAnnouncement(@RequestParam("id") int id){
         announcementRepository.deleteById(id);
