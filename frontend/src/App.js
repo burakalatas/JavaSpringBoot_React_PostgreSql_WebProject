@@ -13,6 +13,9 @@ import NoPage from './Components/MainFolders/NoPage';
 import UpdateNews from './Components/MainFolders/UpdateNews';
 import UpdateAnnouncement from './Components/MainFolders/UpdateAnnouncement';
 
+import LoginComponent from './Components/SecurityFolders/LoginComponent';
+import LogoutComponent from './Components/SecurityFolders/LogoutComponent';
+import AuthenticatedRoute from './Components/SecurityFolders/AuthenticatedRoute';
 
 
 function App() {
@@ -29,6 +32,10 @@ function App() {
             </UserLayout>
           }
         />
+        <Route path="/login" element={<LoginComponent/>} component={<LoginComponent/>} />
+        <Route path="/logout" exact element={<AuthenticatedRoute/>}>
+              <Route exact path='/logout' element={<LogoutComponent/>} component={LogoutComponent} />
+        </Route>
         <Route
           path="/Announcement"
           element={
@@ -39,6 +46,7 @@ function App() {
             </UserLayout>
           }
         />
+        <Route path="/Admin/AddNews" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/AddNews"
           element={
@@ -49,6 +57,8 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
+        <Route path="/Admin/AddAnnouncement" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/AddAnnouncement"
           element={
@@ -59,6 +69,8 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
+        <Route path="/Admin/Announcements" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/Announcements"
           element={
@@ -69,7 +81,9 @@ function App() {
             </AdminLayout>
           }
         />
-        <Route
+        </Route>
+        <Route path="/Admin" element={<AuthenticatedRoute/>}>
+          <Route
           path="/Admin"
           element={
             <AdminLayout>
@@ -79,6 +93,8 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
+        <Route path="/Admin/News" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/News"
           element={
@@ -89,6 +105,8 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
+        <Route path="/Admin/UpdateNews/:id" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/UpdateNews/:id"
           element={
@@ -99,6 +117,8 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
+        <Route path="/Admin/UpdateAnnouncement/:id" exact element={<AuthenticatedRoute/>}>
         <Route
           path="/Admin/UpdateAnnouncement/:id"
           element={
@@ -109,6 +129,7 @@ function App() {
             </AdminLayout>
           }
         />
+        </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>
     </Router>

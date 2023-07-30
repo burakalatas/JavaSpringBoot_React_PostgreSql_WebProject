@@ -19,18 +19,26 @@ function AddAnnouncement() {
     const[id,setId]=useState(params.id)
     const[subject,setSubject]=useState('')
     const[content,setContent]=useState('')
-    const[validityDate,setValidityDate]=useState('')
-    const[image,setImage]=useState('')
+    const[validityDate,setValidityDate]=useState(null)
+    const [file, setFile] = useState('')
 
     const handleClick=(e)=>{
         e.preventDefault()
-        const announcement={id,subject,content,validityDate,image}
-        fetch("http://localhost:8080/admin/updateannouncement",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify(announcement)
-    
-      }).then(()=>{
+        const announcement = new FormData()
+        announcement.append('id', id)
+        announcement.append('subject', subject)
+        announcement.append('content', content)
+        if(validityDate!=null){
+            var date = new Date(validityDate)
+            announcement.append('validityDate', date)
+        }
+        announcement.append('file', file)
+
+        fetch("http://localhost:8080/admin/updateannouncement", {
+            method: "POST",
+            body: announcement
+
+        }).then(()=>{
         Swal.fire(
             'Tebrikler!',
             'Duyuru başarıyla güncellendi',
@@ -40,6 +48,10 @@ function AddAnnouncement() {
         });
       })
     }
+
+    function handleFileChange(e) {
+        if (e.target.files && e.target.files[0]) setFile(e.target.files[0]);
+      }
 
     return (
         <div className='container'>
@@ -59,7 +71,7 @@ function AddAnnouncement() {
                 </div>
                 <div className="form-group">
                     <label>Görsel</label>
-                    <input type="text" defaultValue={announcement.image} onChange={(e)=>setImage(e.target.value)} class="form-control" placeholder='görsel'/>
+                    <input type="file" onChange={handleFileChange} name='file' class="form-control" placeholder='görsel' />
                 </div>
 
                 <br/>

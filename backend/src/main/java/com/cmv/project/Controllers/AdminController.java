@@ -59,10 +59,13 @@ public class AdminController {
     File directory  = new File("src/main/resources/static/images/");
     String UPLOAD_PATH = directory.getAbsolutePath()+"/";
     @PostMapping("/addannouncement")
-    public String addAnnouncement(@RequestParam("file") MultipartFile file,
-                                  @RequestParam String subject, @RequestParam String content,
-                                  @RequestParam Date validityDate){
-        String fileName = file.getOriginalFilename();
+    public String addAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
+                                  @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
+                                  @RequestParam(required = false) Date validityDate){
+        String fileName = "";
+        if (file != null){
+            fileName = file.getOriginalFilename();
+        }
         Announcement announcement = new Announcement();
         if (subject != null && !subject.equals("")){announcement.setSubject(subject);}
         if (content != null && !content.equals("")){announcement.setContent(content);}
@@ -70,7 +73,7 @@ public class AdminController {
         if (validityDate != null){announcement.setValidityDate(validityDate);}
         announcementRepository.save(announcement);
 
-        if (!file.isEmpty()) {
+        if (file != null) {
             try {
                 file.transferTo(new File(UPLOAD_PATH + fileName));
                 return "File uploaded successfully.";
@@ -101,17 +104,29 @@ public class AdminController {
         return announcementRepository.findById(id);
     }
     @PostMapping("/updateannouncement")
-    public String updateNews(@RequestBody Announcement announcement){
-        if (announcement == null){
-            System.out.println("Announcement is null");
-            return "Announcement is null";
+    public String updateAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
+                                     @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
+                                     @RequestParam(required = false) Date validityDate , @RequestParam int id){
+        String fileName = "";
+        if (file != null){
+            fileName = file.getOriginalFilename();
         }
-        Optional<Announcement> n = announcementRepository.findById(announcement.getId());
-        if (announcement.getSubject() != null && !announcement.getSubject().equals("")){n.get().setSubject(announcement.getSubject());}
-        if (announcement.getContent() != null && !announcement.getContent().equals("")){n.get().setContent(announcement.getContent());}
-        if (announcement.getValidityDate() != null ){n.get().setValidityDate(announcement.getValidityDate());}
-        if (announcement.getImage() != null && !announcement.getImage().equals("")){n.get().setImage(announcement.getImage());}
-        announcementRepository.save(n.get());
+        Optional<Announcement> announcement = announcementRepository.findById(id);
+        if (subject != null && !subject.equals("")){announcement.get().setSubject(subject);}
+        if (content != null && !content.equals("")){announcement.get().setContent(content);}
+        if (validityDate != null){announcement.get().setValidityDate(validityDate);}
+        if (fileName != null && !fileName.equals("")){announcement.get().setImage(fileName);}
+        announcementRepository.save(announcement.get());
+
+        if (file != null) {
+            try {
+                file.transferTo(new File(UPLOAD_PATH + fileName));
+                return "File uploaded successfully.";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "File upload failed.";
+            }
+        }
 
         return "Announcement updated";
     }

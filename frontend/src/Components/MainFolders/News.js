@@ -19,12 +19,11 @@ function News() {
             Swal.fire({
                 title: item.subject,
                 text: item.content,
-                footer: `<a target="_blank" href="https://${item.newsAddress}">Linke Git</a>`,
+                footer: `<a target="_blank" href="${item.newsAddress}">Linke Git</a>`,
                 confirmButtonText: 'Kapat',
 
         })
     }
-
 
     return (
         <div>
@@ -41,7 +40,7 @@ function News() {
                     <tr key={item.id} onClick={popup(item)}>
                         <td >{item.subject}</td>
                         <td >{item.validityDate}</td>
-                        <td >{item.newsAddress}</td>
+                        <td ><a className='btn btn-primary' target='_blank' href={item.newsAddress}>Linke Git</a></td>
                     </tr>
                     ))}
                 </tbody>
