@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
@@ -62,16 +63,19 @@ public class AdminController {
     @PostMapping("/addannouncement")
     public String addAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
                                   @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
-                                  @RequestParam(required = false) LocalDate validityDate){
+                                  @RequestParam(required = false) Date validityDate){
         String fileName = "";
         if (file != null){
-            fileName = file.getOriginalFilename();
+            fileName = System.currentTimeMillis()+ file.getOriginalFilename();
         }
+
+        LocalDate date = validityDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
         Announcement announcement = new Announcement();
         if (subject != null && !subject.equals("")){announcement.setSubject(subject);}
         if (content != null && !content.equals("")){announcement.setContent(content);}
         announcement.setImage(fileName);
-        if (validityDate != null){announcement.setValidityDate(validityDate);}
+        if (validityDate != null){announcement.setValidityDate(date);}
         announcementRepository.save(announcement);
 
         if (file != null) {
@@ -107,15 +111,18 @@ public class AdminController {
     @PostMapping("/updateannouncement")
     public String updateAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
                                      @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
-                                     @RequestParam(required = false) LocalDate validityDate , @RequestParam int id){
+                                     @RequestParam(required = false) Date validityDate , @RequestParam int id){
         String fileName = "";
         if (file != null){
-            fileName = file.getOriginalFilename();
+            fileName = System.currentTimeMillis()+ file.getOriginalFilename();
         }
+
+        LocalDate date = validityDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
         Optional<Announcement> announcement = announcementRepository.findById(id);
         if (subject != null && !subject.equals("")){announcement.get().setSubject(subject);}
         if (content != null && !content.equals("")){announcement.get().setContent(content);}
-        if (validityDate != null){announcement.get().setValidityDate(validityDate);}
+        if (validityDate != null){announcement.get().setValidityDate(date);}
         if (fileName != null && !fileName.equals("")){announcement.get().setImage(fileName);}
         announcementRepository.save(announcement.get());
 
