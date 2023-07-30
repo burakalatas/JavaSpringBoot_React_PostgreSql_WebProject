@@ -8,7 +8,7 @@ function AddAnnouncement() {
     const [file, setFile] = useState('')
 
     const handleClick = (e) => {
-        if(subject!='' && content!='' && validityDate!=null && file!=''){
+        if(subject!=='' && content!=='' && validityDate!==null && file!==''){
         e.preventDefault()
         const announcement = new FormData()
         announcement.append('subject', subject)

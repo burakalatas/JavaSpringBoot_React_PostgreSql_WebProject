@@ -63,7 +63,7 @@ class LoginComponent extends Component {
                     <br />
                     <div class="btn-group" style={{width:"100%"}} role="group" aria-label="Basic example">
                         <Link type="button" class="btn btn-primary" to="/">Ana Sayfaya Git</Link>
-                        {isUserLoggedIn &&<Link type="button" to="/" class="btn btn-warning">Admin Paneli</Link>}
+                        {isUserLoggedIn &&<Link type="button" to="/Admin" class="btn btn-warning">Admin Paneli</Link>}
                     </div>
                 </div>
             </div>

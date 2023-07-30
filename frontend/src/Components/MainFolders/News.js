@@ -40,7 +40,7 @@ function News() {
                     <tr key={item.id} onClick={popup(item)}>
                         <td >{item.subject}</td>
                         <td >{item.validityDate}</td>
-                        <td ><a className='btn btn-primary' target='_blank' href={item.newsAddress}>Linke Git</a></td>
+                        <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
                     </tr>
                     ))}
                 </tbody>

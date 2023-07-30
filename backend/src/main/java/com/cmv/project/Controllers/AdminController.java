@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -61,7 +62,7 @@ public class AdminController {
     @PostMapping("/addannouncement")
     public String addAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
                                   @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
-                                  @RequestParam(required = false) Date validityDate){
+                                  @RequestParam(required = false) LocalDate validityDate){
         String fileName = "";
         if (file != null){
             fileName = file.getOriginalFilename();
@@ -106,7 +107,7 @@ public class AdminController {
     @PostMapping("/updateannouncement")
     public String updateAnnouncement(@RequestParam(value = "file",required = false) MultipartFile file,
                                      @RequestParam(required = false) String subject, @RequestParam(required = false) String content,
-                                     @RequestParam(required = false) Date validityDate , @RequestParam int id){
+                                     @RequestParam(required = false) LocalDate validityDate , @RequestParam int id){
         String fileName = "";
         if (file != null){
             fileName = file.getOriginalFilename();

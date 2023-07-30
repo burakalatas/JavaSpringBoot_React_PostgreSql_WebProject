@@ -53,7 +53,7 @@ function AdminNews() {
                             <td>{item.subject}</td>
                             <td>{item.content}</td>
                             <td>{item.validityDate}</td>
-                            <td>{item.newsAddress}</td>
+                            <td><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
                             <td><Link className='btn btn-warning' to={{pathname:`/Admin/UpdateNews/${item.id}`}}>Güncelle</Link></td>
                             <td><button type="button" onClick={del(item.id)} class="btn btn-danger">Sil</button></td>
                         </tr>

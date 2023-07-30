@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -24,5 +25,5 @@ public class Event {
     @Column(name="content")
     private String content;
     @Column(name="validity_date")
-    private Date validityDate;
+    private LocalDate validityDate;
 }

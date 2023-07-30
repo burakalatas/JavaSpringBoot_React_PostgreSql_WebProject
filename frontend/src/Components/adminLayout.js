@@ -13,3 +13,4 @@ function adminLayout({ children }) {
 }
 
 export default adminLayout
+

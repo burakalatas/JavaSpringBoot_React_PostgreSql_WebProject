@@ -8,7 +8,7 @@ function AddNews() {
     const [newsAddress, setNewsAddress] = useState('')
 
     const handleClick = (e) => {
-        if (subject != '' && content != '' && validityDate != '' && newsAddress != '') {
+        if (subject !== '' && content !== '' && validityDate !== '' && newsAddress !== '') {
             e.preventDefault()
             const newss = { subject, content, validityDate, newsAddress }
             fetch("http://localhost:8080/admin/addnews", {
@@ -23,7 +23,9 @@ function AddNews() {
                 'Tebrikler!',
                 'Haber başarıyla eklendi',
                 'success'
-            )
+            ).then(function () {
+                window.location.reload();
+            })
         }
     }
 
