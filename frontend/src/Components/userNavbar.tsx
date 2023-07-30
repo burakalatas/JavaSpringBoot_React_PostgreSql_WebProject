@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import AuthenticationService from '../Components/Service/AuthenticationService';
+import AuthenticationService from './Service/AuthenticationService';
 
 class Navbar extends Component {
 
@@ -23,13 +23,13 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarsExample03">
                         <ul className="navbar-nav me-auto mb-2 mb-sm-0">
                             <li className="nav-item">
-                                <Link to="/" className="nav-link active ok" aria-current="page" href="x.html"
+                                <Link to="/" className="nav-link active ok" aria-current="page"
                                     style={{ color: "#F6F4EB", fontSize: "16px" }}>
                                     Haberler
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/Announcement" className="nav-link active ok" aria-current="page" href="x.html"
+                                <Link to="/Announcement" className="nav-link active ok" aria-current="page" 
                                     style={{ color: "#F6F4EB", fontSize: "16px" }}>Duyurular</Link>
                             </li>
                             {!isUserLoggedIn && <li><Link className="nav-link" to="/login">Login</Link></li>}

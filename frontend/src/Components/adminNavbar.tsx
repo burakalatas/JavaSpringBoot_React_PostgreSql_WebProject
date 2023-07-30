@@ -15,25 +15,25 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarsExample03">
                     <ul className="navbar-nav me-auto mb-2 mb-sm-0">
                         <li className="nav-item">
-                            <Link to="/Admin/News/" className="nav-link active ok" aria-current="page" href="x.html"
+                            <Link to="/Admin/News/" className="nav-link active ok" aria-current="page" 
                                 style={{ color: "#3E001F", fontSize: "16px" }}>Haberler</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/Admin/AddNews/" className="nav-link active ok" aria-current="page" href="x.html"
+                            <Link to="/Admin/AddNews/" className="nav-link active ok" aria-current="page"
                                 style={{ color: "#3E001F", fontSize: "16px" }}>
                                 Haber Ekle
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/Admin/Announcements/" className="nav-link active ok" aria-current="page" href="x.html"
+                            <Link to="/Admin/Announcements/" className="nav-link active ok" aria-current="page"
                                 style={{ color: "#3E001F", fontSize: "16px" }}>Duyurular</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/Admin/AddAnnouncement/" className="nav-link active ok" aria-current="page" href="x.html"
+                            <Link to="/Admin/AddAnnouncement/" className="nav-link active ok" aria-current="page"
                                 style={{ color: "#3E001F", fontSize: "16px" }}>Duyuru Ekle</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/" className="nav-link active ok" aria-current="page" href="x.html"
+                            <Link to="/" className="nav-link active ok" aria-current="page"
                                 style={{ color: "#3E001F", fontSize: "16px" }}>Siteye Git</Link>
                         </li>
                     </ul>
