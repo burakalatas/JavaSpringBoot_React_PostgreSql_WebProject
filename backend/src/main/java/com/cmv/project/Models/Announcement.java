@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @DiscriminatorValue("announcement")
 public class Announcement extends Event {
-    @Column(name="image")
+    @Column(name="image",length = 1500)
     private String image;
 }

@@ -37,9 +37,9 @@ function News() {
                 </thead>
                 <tbody>
                     {news.map((item) => (
-                    <tr key={item.id} onClick={popup(item)}>
-                        <td >{item.subject}</td>
-                        <td >{item.validityDate}</td>
+                    <tr key={item.id} >
+                        <td onClick={popup(item)} >{item.subject}</td>
+                        <td onClick={popup(item)} >{item.validityDate}</td>
                         <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
                     </tr>
                     ))}

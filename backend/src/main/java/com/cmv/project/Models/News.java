@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @DiscriminatorValue("news")
 public class News extends Event{
-    @Column(name="newsaddress")
+    @Column(name="newsaddress",length = 10000)
     private String newsAddress;
 }

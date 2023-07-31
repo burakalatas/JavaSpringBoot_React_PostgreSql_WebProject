@@ -20,9 +20,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-    @Column(name="subject")
+    @Column(name="subject",length = 1000)
     private String subject;
-    @Column(name="content")
+    @Column(name="content", length = 10000)
     private String content;
     @Column(name="validity_date")
     private LocalDate validityDate;
