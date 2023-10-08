@@ -25,8 +25,8 @@ function Announcement() {
             imageAlt: 'Custom image',
             confirmButtonText: 'Kapat',
 
-    })
-}
+        })
+    }
     return (
         <div>
             <table class="table table-hover">
@@ -38,12 +38,12 @@ function Announcement() {
                     </tr>
                 </thead>
                 <tbody>
-                    {announcement.map((item) => (
-                    <tr key={item.id} onClick={popup(item)}>
-                        <td>{item.subject}</td>
-                        <td>{item.validityDate}</td>
-                        <td><img src={require(`../../../../backend/src/main/resources/static/images/${item.image}`)} style={{width:"40px",height:"40px",borderRadius:"50px"}} alt="photoooo"></img></td>
-                    </tr>
+                    {!announcement && announcement.map((item) => (
+                        <tr key={item.id} onClick={popup(item)}>
+                            <td>{item.subject}</td>
+                            <td>{item.validityDate}</td>
+                            <td><img src={require(`../../../../backend/src/main/resources/static/images/${item.image}`)} style={{ width: "40px", height: "40px", borderRadius: "50px" }} alt="photoooo"></img></td>
+                        </tr>
                     ))}
                 </tbody>
             </table>

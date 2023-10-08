@@ -16,11 +16,11 @@ function News() {
 
     const popup = (item) => async () => {
 
-            Swal.fire({
-                title: item.subject,
-                text: item.content,
-                footer: `<a target="_blank" href="${item.newsAddress}">Linke Git</a>`,
-                confirmButtonText: 'Kapat',
+        Swal.fire({
+            title: item.subject,
+            text: item.content,
+            footer: `<a target="_blank" href="${item.newsAddress}">Linke Git</a>`,
+            confirmButtonText: 'Kapat',
 
         })
     }
@@ -36,12 +36,12 @@ function News() {
                     </tr>
                 </thead>
                 <tbody>
-                    {news.map((item) => (
-                    <tr key={item.id} >
-                        <td onClick={popup(item)} >{item.subject}</td>
-                        <td onClick={popup(item)} >{item.validityDate}</td>
-                        <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
-                    </tr>
+                    {!news && news.map((item) => (
+                        <tr key={item.id} >
+                            <td onClick={popup(item)} >{item.subject}</td>
+                            <td onClick={popup(item)} >{item.validityDate}</td>
+                            <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
+                        </tr>
                     ))}
                 </tbody>
             </table>
