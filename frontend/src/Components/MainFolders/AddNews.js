@@ -6,6 +6,7 @@ function AddNews() {
     const [content, setContent] = useState('')
     const [validityDate, setValidityDate] = useState('')
     const [newsAddress, setNewsAddress] = useState('')
+    const [token] = useState(localStorage.getItem("token"))
 
     const handleClick = (e) => {
         if (subject !== '' && content !== '' && validityDate !== '' && newsAddress !== '') {
@@ -13,8 +14,11 @@ function AddNews() {
             const newss = { subject, content, validityDate, newsAddress }
             fetch("http://localhost:8080/admin/addnews", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(newss)
+                body: JSON.stringify(newss),
+                headers: {
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                }
 
             }).then(() => {
                 console.log("New News added")

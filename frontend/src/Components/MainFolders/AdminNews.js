@@ -5,20 +5,30 @@ import Swal from 'sweetalert2';
 function AdminNews() {
     const [news, setNews] = useState([])
 
+    const [token] = useState(localStorage.getItem("token"))
+
     useEffect(() => {
-        fetch("http://localhost:8080/user/news")
-            .then(res => res.json())
+        fetch("http://localhost:8080/user/news", {
+            method: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json())
             .then((result) => {
                 setNews(result);
             }
             )
-    }, [])
+    }, [token])
 
     const del = (id) => async () => {
 
         await fetch(`http://localhost:8080/admin/deletenews?id=${id}`, {
             method: "DELETE",
-            body: JSON.stringify(id)
+            body: JSON.stringify(id),
+            headers: {
+                'Authorization': "Bearer " + token
+            }
 
         }).then(() => {
             Swal.fire(
@@ -33,7 +43,7 @@ function AdminNews() {
 
     return (
         <div>
-            <table class="table table-striped">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
@@ -46,7 +56,7 @@ function AdminNews() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!news && news.map((item) => (
+                    {news.map((item) => (
                         <tr key={item.id}>
                             <th scope="row">{item.id}</th>
                             <td>{item.subject}</td>

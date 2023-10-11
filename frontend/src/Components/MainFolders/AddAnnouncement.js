@@ -6,39 +6,43 @@ function AddAnnouncement() {
     const [content, setContent] = useState('')
     const [validityDate, setValidityDate] = useState(null)
     const [file, setFile] = useState('')
+    const [token] = useState(localStorage.getItem("token"))
 
     const handleClick = (e) => {
-        if(subject!=='' && content!=='' && validityDate!==null && file!==''){
-        e.preventDefault()
-        const announcement = new FormData()
-        announcement.append('subject', subject)
-        announcement.append('content', content)
-        if(validityDate!=null){
-            var date = new Date(validityDate)
-            announcement.append('validityDate', date)
+        if (subject !== '' && content !== '' && validityDate !== null && file !== '') {
+            e.preventDefault()
+            const announcement = new FormData()
+            announcement.append('subject', subject)
+            announcement.append('content', content)
+            if (validityDate != null) {
+                var date = new Date(validityDate)
+                announcement.append('validityDate', date)
+            }
+            announcement.append('file', file)
+
+            fetch("http://localhost:8080/admin/addannouncement", {
+                method: "POST",
+                body: announcement,
+                headers: {
+                    'Authorization': "Bearer " + token
+                }
+
+            }).then(() => {
+                console.log("New Announcement added")
+            })
+
+            Swal.fire(
+                'Tebrikler!',
+                'Duyuru başarıyla eklendi',
+                'success'
+            ).then(function () {
+                window.location.reload();
+            });
         }
-        announcement.append('file', file)
-
-        fetch("http://localhost:8080/admin/addannouncement", {
-            method: "POST",
-            body: announcement
-
-        }).then(() => {
-            console.log("New Announcement added")
-        })
-
-        Swal.fire(
-            'Tebrikler!',
-            'Duyuru başarıyla eklendi',
-            'success'
-        ).then(function () {
-            window.location.reload();
-        });
-    }
     }
     function handleFileChange(e) {
         if (e.target.files && e.target.files[0]) setFile(e.target.files[0]);
-      }
+    }
 
     return (
         <div className='container'>

@@ -5,20 +5,30 @@ import Swal from 'sweetalert2';
 function AdminAnnouncements() {
     const [announcement, setAnnouncement] = useState([])
 
+    const [token] = useState(localStorage.getItem("token"))
+
     useEffect(() => {
-        fetch("http://localhost:8080/user/announcement")
-            .then(res => res.json())
+        fetch("http://localhost:8080/user/announcement", {
+            method: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json())
             .then((result) => {
                 setAnnouncement(result);
             }
             )
-    }, [])
+    }, [token])
 
     const del = (id) => async () => {
 
         await fetch(`http://localhost:8080/admin/deleteannouncement?id=${id}`, {
             method: "DELETE",
-            body: JSON.stringify(id)
+            body: JSON.stringify(id),
+            headers: {
+                'Authorization': "Bearer " + token
+            }
 
         }).then(() => {
             Swal.fire(
@@ -33,7 +43,7 @@ function AdminAnnouncements() {
 
     return (
         <div>
-            <table class="table table-striped">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
@@ -46,7 +56,7 @@ function AdminAnnouncements() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!announcement && announcement.map((item) => (
+                    {announcement.map((item) => (
                         <tr key={item.id}>
                             <th scope="row">{item.id != null ? item.id : ""}</th>
                             <td>{item.subject != null ? item.subject : ""}</td>

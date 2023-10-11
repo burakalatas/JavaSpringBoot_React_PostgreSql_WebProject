@@ -3,16 +3,22 @@ import '../../custom.css';
 import Swal from 'sweetalert2';
 
 function News() {
+    const [token] = useState(localStorage.getItem("token"))
     const [news, setNews] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:8080/user/news")
-            .then(res => res.json())
+        fetch("http://localhost:8080/user/news", {
+            method: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json())
             .then((result) => {
                 setNews(result);
             }
             )
-    }, [])
+    }, [token])
 
     const popup = (item) => async () => {
 
@@ -36,11 +42,11 @@ function News() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!news && news.map((item) => (
-                        <tr key={item.id} >
-                            <td onClick={popup(item)} >{item.subject}</td>
-                            <td onClick={popup(item)} >{item.validityDate}</td>
-                            <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item.newsAddress}>Linke Git</a></td>
+                    {news.map((item) => (
+                        <tr key={item?.id} >
+                            <td onClick={popup(item)} >{item?.subject}</td>
+                            <td onClick={popup(item)} >{item?.validityDate}</td>
+                            <td ><a className='btn btn-primary' target='_blank' rel='noreferrer' href={item?.newsAddress}>Linke Git</a></td>
                         </tr>
                     ))}
                 </tbody>

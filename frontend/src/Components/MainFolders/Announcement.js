@@ -3,16 +3,22 @@ import '../../custom.css';
 import Swal from 'sweetalert2';
 
 function Announcement() {
+    const [token] = useState(localStorage.getItem("token"))
     const [announcement, setAnnouncement] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:8080/user/announcement")
-            .then(res => res.json())
+        fetch("http://localhost:8080/user/announcement", {
+            method: "GET",
+            contentType: "application/json",
+            headers: {
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json())
             .then((result) => {
                 setAnnouncement(result);
             }
             )
-    }, [])
+    }, [token])
 
     const popup = (item) => async () => {
 
@@ -29,7 +35,7 @@ function Announcement() {
     }
     return (
         <div>
-            <table class="table table-hover">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Konu</th>
@@ -38,7 +44,7 @@ function Announcement() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!announcement && announcement.map((item) => (
+                    {announcement.map((item) => (
                         <tr key={item.id} onClick={popup(item)}>
                             <td>{item.subject}</td>
                             <td>{item.validityDate}</td>
